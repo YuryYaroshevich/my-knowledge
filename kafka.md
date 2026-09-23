@@ -10,5 +10,12 @@
 Use these configs to speed up consumer rebalances.
 
 ## Coonsumer poll thread
-`max.poll.interval.ms` - default 5 minutes, max amount of time between two polls to consider consumer dead.
+* `max.poll.interval.ms` - default 5 minutes, max amount of time between two polls to consider consumer dead.
 Increase if your consumer is slow and decrease if the opposite.
+* `max.poll.records` - default 500, how many records to fetch with one poll request.
+* `fetch.min.bytes` - default 1, how much data to poll at least on each request. Time which is broker waits to fullfil this requirement - `fetch.max.wait.ms` - default 500.
+* `max.partition.fetch.bytes` - default 1mb, max amount of data to fetch from 1 partition.
+* `fetch.max.bytes` - default 55mb, max data to return in one request.
+
+## Consumer behaviour
+Normally consumer reads partition from broker which is a leader for that partition, but from kafka 2.4 reads from replicase are allowed given the proper config in place(rack.id=client.rack, replicas.selector.class = ...RackAwareReplicaSelector)
