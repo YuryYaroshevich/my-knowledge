@@ -19,3 +19,10 @@ Increase if your consumer is slow and decrease if the opposite.
 
 ## Consumer behaviour
 Normally consumer reads partition from broker which is a leader for that partition, but from kafka 2.4 reads from replicase are allowed given the proper config in place(rack.id=client.rack, replicas.selector.class = ...RackAwareReplicaSelector)
+
+## acks
+
+`acks=0`: producers consider messages as "written successfully" the moment the message was sent without waiting for the broker to accept it at all.
+`acks=1`: producers consider messages as "written successfully" when the message was acknowledged by only the partition leader.
+`acks=all`: producers consider messages as "written successfully" when the message is accepted by all in-sync replicas (ISR).
+The `min.insync.replicas` setting specifies the minimum number of replicas(including partition leader) that have to acknowledge a write for it to be considered successful when using acks=all(acks=-1).
